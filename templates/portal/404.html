@@ -1,0 +1,16 @@
+{%  extends 'portal/base.html' %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+
+{%  block content %}
+
+    <section id="error" class="container text-center">
+        <h1>404, Страница не найдена</h1>
+        <p>Страница, которую вы ищете, не существует или произошла другая ошибка.</p>
+        <a class="btn btn-primary" href="index">Вернуться на главную</a>
+    </section><!--/#error-->
+
+{% endblock %}

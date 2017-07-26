@@ -1,0 +1,98 @@
+{%  extends 'portal/base.html' %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{%  block content %}
+
+    <section id="ad_search" class="container">
+        <div class="center">
+            <h2>AD Search</h2>
+            <p class="lead">Search in Active Directory</p>
+        </div>
+
+
+        <div class="row">
+
+            <nav class="">
+                <div class="nav nav-justified navbar-nav">
+
+                    <form method="GET" class="navbar-form navbar-search get-form" role="search">
+                        <div class="input-group">
+
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown" name="typeSearch" value="login">
+                                    <span class="label-icon">Search By Login</span>
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" class="typeSearch" value="login" name="typeSearch">
+                                <ul class="dropdown-menu pull-left" role="menu">
+                                    <li value="full_name">
+                                        <a href="#">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                            <span class="label-icon">Search By Full name</span>
+                                        </a>
+                                    </li>
+                                    <li value="last_logon">
+                                        <a href="#">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                            <span class="label-icon">Search By Last logon</span>
+                                        </a>
+                                    </li>
+                                    <li value="login">
+                                        <a href="#">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                            <span class="label-icon">Search By Login</span>
+                                        </a>
+                                    </li>
+                                    <li value="email">
+                                        <a href="#">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                            <span class="label-icon">Search By Email</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <input type="text" class="form-control" placeholder="Search" name="inputSearch">
+
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-search btn-default">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </nav>
+        </div>
+
+
+        <h2>User credentials</h2>
+        Total entity: {{ len }}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Full name</th>
+                    <th>Last logon</th>
+                    <th>Login</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for iteruser in data %}
+                    <tr>
+                    {% for iterdata in iteruser %}
+                        <th>{{iterdata}}</th>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+    </section>
+
+{% endblock %}
