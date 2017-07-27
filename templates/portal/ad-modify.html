@@ -8,8 +8,8 @@
 
     <section id="ad_search" class="container">
         <div class="center">
-            <h2>AD Search</h2>
-            <p class="lead">Search in Active Directory</p>
+            <h2>AD Modify</h2>
+            <p class="lead">Modify Data in Active Directory</p>
         </div>
 
 
@@ -23,20 +23,20 @@
 
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown" name="typeSearch" value="login">
-                                    <span class="label-icon"><span class="glyphicon glyphicon-user"></span> Search By Login</span>
+                                    <span class="label-icon">Search By Login</span>
                                     <span class="caret"></span>
                                 </button>
                                 <input type="hidden" class="typeSearch" value="login" name="typeSearch">
                                 <ul class="dropdown-menu pull-left" role="menu">
                                     <li value="full_name">
                                         <a href="#">
-                                            <i class="fa fa-address-card"></i>
+                                            <span class="glyphicon glyphicon-user"></span>
                                             <span class="label-icon">Search By Full name</span>
                                         </a>
                                     </li>
                                     <li value="last_logon">
                                         <a href="#">
-                                            <i class="fa fa-desktop"></i>
+                                            <span class="glyphicon glyphicon-user"></span>
                                             <span class="label-icon">Search By Last logon</span>
                                         </a>
                                     </li>
@@ -48,14 +48,8 @@
                                     </li>
                                     <li value="email">
                                         <a href="#">
-                                            <i class="fa fa-envelope"></i>
+                                            <span class="glyphicon glyphicon-user"></span>
                                             <span class="label-icon">Search By Email</span>
-                                        </a>
-                                    </li>
-                                    <li value="group">
-                                        <a href="#">
-                                            <i class="fa fa-users"></i>
-                                            <span class="label-icon">Search By Group</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -76,30 +70,23 @@
         </div>
 
 
-        <h2>{{ rowName }}</h2>
+        <h2>User credentials</h2>
         Total entity: {{ len }}
         <table class="table table-striped">
             <thead>
                 <tr>
-                    {% for itercol in colName %}
-                    <th>{{ itercol }}</th>
-                    {% endfor %}
+                    <th>Full name</th>
+                    <th>Last logon</th>
+                    <th>Login</th>
+                    <th>Email</th>
                 </tr>
             </thead>
             <tbody>
                 {% for iteruser in data %}
                     <tr>
                     {% for iterdata in iteruser %}
-                        <th>
-                            {% if iterdata %}
-                                {% for item in iterdata %}
-                                    {{ item }} <br>
-                                {% endfor %}
-                            {% else %}
-                                -
-                            {% endif %}
-                        </th>
-                    {% endfor %}
+                        <th>{{iterdata}}</th>
+                        {% endfor %}
                     </tr>
                 {% endfor %}
             </tbody>

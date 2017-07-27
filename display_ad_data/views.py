@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import search_ad_data
+from .models import search_ad_data, search_ad_data_group
 from django.views.decorators.http import require_GET
 from django.contrib.auth.decorators import login_required
 
@@ -19,10 +19,23 @@ def ad_search(request):
         return render(request, 'portal/ad-search.html', {
             'title': 'AD Search', })
     else:
-        data = search_ad_data(inputSearch, typeSearch)
-        content = {'title': 'AD Search',
-                   'data': data,
-                   'len': len(data)}
+        if typeSearch == 'group':
+            #categorySearch = r'Group'
+            data = search_ad_data_group(inputSearch, typeSearch)
+            content = {'title': 'AD Search',
+                       'rowName': 'Group credentials',
+                       'colName': ['Group name', 'Description', 'Member'],
+                       'data': data,
+                       'len': len(data)}
+        else:
+            #categorySearch = r'Person'
+            data = search_ad_data(inputSearch, typeSearch)
+
+            content = {'title': 'AD Search',
+                       'rowName': 'User credentials',
+                       'colName': ['Full name', 'Last logon', 'Login', 'Email'],
+                       'data': data,
+                       'len': len(data)}
 
         return render(request, 'portal/ad-search.html', content)
 
