@@ -21,13 +21,9 @@ def ad_search(request):
     else:
         if typeSearch == 'compare':
             inputSearch = inputSearch.split()
-            print(inputSearch)
             data = compare_user_group(inputSearch)
-            print(len(data['vlva']))
-            print(len(data['das']))
             magicset = set([])
             for i in data:
-                print(data[i][0])
                 magicset.update(data[i])
             magiclist = []
             for i in magicset:
