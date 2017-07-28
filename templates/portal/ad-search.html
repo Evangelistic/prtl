@@ -58,6 +58,12 @@
                                             <span class="label-icon">Search By Group</span>
                                         </a>
                                     </li>
+                                    <li value="compare">
+                                        <a href="#">
+                                            <i class="fa fa-exchange"></i>
+                                            <span class="label-icon">Compare AD Users</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -90,7 +96,7 @@
                 {% for iteruser in data %}
                     <tr>
                     {% for iterdata in iteruser %}
-                        <th>
+                        <td>
                             {% if iterdata %}
                                 {% for item in iterdata %}
                                     {{ item }} <br>
@@ -98,7 +104,7 @@
                             {% else %}
                                 -
                             {% endif %}
-                        </th>
+                        </td>
                     {% endfor %}
                     </tr>
                 {% endfor %}
