@@ -1,4 +1,5 @@
 {%  extends 'portal/base.html' %}
+{% load staticfiles %}
 
 {% block title %}
     <title>{{ title }}</title>
@@ -22,11 +23,11 @@
                         <div class="input-group">
 
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown" name="typeSearch" value="login">
+                                <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown" name="type_search" value="login">
                                     <span class="label-icon"><span class="glyphicon glyphicon-user"></span> Search By Login</span>
                                     <span class="caret"></span>
                                 </button>
-                                <input type="hidden" class="typeSearch" value="login" name="typeSearch">
+                                <input type="hidden" class="type_search" value="login" name="type_search">
                                 <ul class="dropdown-menu pull-left" role="menu">
                                     <li value="full_name">
                                         <a href="#">
@@ -67,7 +68,7 @@
                                 </ul>
                             </div>
 
-                            <input type="text" class="form-control" placeholder="Search" name="inputSearch">
+                            <input type="text" class="form-control" placeholder="Search" name="input_search">
 
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-search btn-default">
@@ -113,5 +114,8 @@
 
 
     </section>
+{% endblock %}
 
+{% block user_scripts %}
+    <script src="{% static 'portal/js/search_ad.js' %}"></script>
 {% endblock %}

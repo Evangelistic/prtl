@@ -1,54 +1,54 @@
 from django.shortcuts import render
 from .models import search_ad_data, search_ad_data_group, compare_user_group
 from django.views.decorators.http import require_GET
-from django.contrib.auth.decorators import login_required
 
+# from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
-#@login_required
+# @login_required
 @require_GET
 def ad_search(request):
     try:
-        inputSearch = request.GET['inputSearch']
-        typeSearch=request.GET['typeSearch']
+        input_search = request.GET['input_search']
+        type_search = request.GET['type_search']
     except:
-        inputSearch = ''
-        typeSearch='login'
-    if inputSearch == '':
+        input_search = ''
+        type_search = 'login'
+    if input_search == '':
         return render(request, 'portal/ad-search.html', {
             'title': 'AD Search', })
     else:
-        if typeSearch == 'compare':
-            inputSearch = inputSearch.split()
-            data = compare_user_group(inputSearch)
-            magicset = set([])
+        if type_search == 'compare':
+            input_search = input_search.split()
+            data = compare_user_group(input_search)
+            magic_set = set([])
             for i in data:
-                magicset.update(data[i])
-            magiclist = []
-            for i in magicset:
+                magic_set.update(data[i])
+            magic_list = []
+            for i in magic_set:
                 temp = [[i]]
                 for j in data:
                     if i in data[j]:
-                        temp.append('+')
+                        temp.append(['+'])
                     else:
-                        temp.append('-')
-                magiclist.append(temp)
+                        temp.append(['-'])
+                magic_list.append(temp)
             content = {'title': 'Compare AD User',
                        'rowName': 'Compare User Group',
-                       'colName': ['Group name'] + inputSearch,
-                       'data': magiclist,
+                       'colName': ['Group name'] + input_search,
+                       'data': magic_list,
                        'len': len(data)}
             render(request, 'portal/ad-search.html', content)
-        elif typeSearch == 'group':
-            data = search_ad_data_group(inputSearch, typeSearch)
+        elif type_search == 'group':
+            data = search_ad_data_group(input_search, type_search)
             content = {'title': 'AD Search',
                        'rowName': 'Group credentials',
                        'colName': ['Group name', 'Description', 'Member'],
                        'data': data,
                        'len': len(data)}
         else:
-            data = search_ad_data(inputSearch, typeSearch)
+            data = search_ad_data(input_search, type_search)
             '''delete  dn user attribute  in output'''
             data = [data[i][1:] for i in range(len(data))]
             content = {'title': 'AD Search',
@@ -58,5 +58,3 @@ def ad_search(request):
                        'len': len(data)}
 
         return render(request, 'portal/ad-search.html', content)
-
-
