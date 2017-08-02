@@ -1,4 +1,5 @@
 {%  extends 'portal/base.html' %}
+{% load staticfiles %}
 
 {% block title %}
     <title>{{ title }}</title>
@@ -18,44 +19,32 @@
             <nav class="">
                 <div class="nav nav-justified navbar-nav">
 
-                    <form method="GET" class="navbar-form navbar-search get-form" role="search">
+                    <form method="POST" class="navbar-form navbar-search get-form" role="search">
                         <div class="input-group">
-
+                            {% csrf_token %}
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown" name="typeSearch" value="login">
-                                    <span class="label-icon">Search By Login</span>
+                                <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown" name="type_search" value="full_name">
+                                    <span class="label-icon"><i class="fa fa-address-card"></i> Modify Full name</span>
                                     <span class="caret"></span>
                                 </button>
-                                <input type="hidden" class="typeSearch" value="login" name="typeSearch">
+                                <input type="hidden" class="type_search" value="full_name" name="type_search">
                                 <ul class="dropdown-menu pull-left" role="menu">
                                     <li value="full_name">
                                         <a href="#">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                            <span class="label-icon">Search By Full name</span>
-                                        </a>
-                                    </li>
-                                    <li value="last_logon">
-                                        <a href="#">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                            <span class="label-icon">Search By Last logon</span>
-                                        </a>
-                                    </li>
-                                    <li value="login">
-                                        <a href="#">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                            <span class="label-icon">Search By Login</span>
+                                            <i class="fa fa-address-card"></i>
+                                            <span class="label-icon">Modify Full name</span>
                                         </a>
                                     </li>
                                     <li value="email">
                                         <a href="#">
-                                            <span class="glyphicon glyphicon-user"></span>
-                                            <span class="label-icon">Search By Email</span>
+                                            <i class="fa fa-envelope"></i>
+                                            <span class="label-icon">Modify Email</span>
                                         </a>
                                     </li>
                                 </ul>
                             </div>
 
-                            <input type="text" class="form-control" placeholder="Search" name="inputSearch">
+                            <input type="text" class="form-control" placeholder="Search" name="input_search">
 
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-search btn-default">
@@ -70,29 +59,42 @@
         </div>
 
 
-        <h2>User credentials</h2>
-        Total entity: {{ len }}
+        <h2>{{ row_name }}</h2>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Full name</th>
-                    <th>Last logon</th>
-                    <th>Login</th>
-                    <th>Email</th>
+                    {% if col_name %}
+                        <th>status</th>
+                    {% endif %}
+                    {% for itercol in col_name %}
+                    <th>{{ itercol }}</th>
+                    {% endfor %}
                 </tr>
             </thead>
             <tbody>
-                {% for iteruser in data %}
-                    <tr>
-                    {% for iterdata in iteruser %}
-                        <th>{{iterdata}}</th>
-                        {% endfor %}
-                    </tr>
-                {% endfor %}
+                <tr>
+                    {% if data_old %}
+                        <td>old</td>
+                    {% endif %}
+                    {% for key, value in data_old.items %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% if data_new %}
+                        <td>new</td>
+                    {% endif %}
+                    {% for key, value in data_new.items %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
             </tbody>
         </table>
 
 
     </section>
+{% endblock %}
 
+{% block user_scripts %}
+    <script src="{% static 'portal/js/modify_ad.js' %}"></script>
 {% endblock %}

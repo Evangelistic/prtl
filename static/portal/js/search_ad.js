@@ -11,6 +11,6 @@ $(function(){
     $(".input-group-btn .dropdown-menu li").click(function(){
         var selValue =  $(this).attr("value");
 
-        $('.typeSearch').attr("value", selValue);
+        $('.type_search').attr("value", selValue);
     });
 });

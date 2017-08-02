@@ -139,6 +139,11 @@ STATICFILES_DIRS = (
 
 STATIC_URL = '/static/'
 
+AD_ATTR_LS = {
+    'Person': ['cn', 'objectCategory', 'mail', 'sAMAccountName', 'lastLogon', 'distinguishedName'],
+    'Group': ['cn', 'description', 'member', 'whenChanged', 'whenCreated', 'distinguishedName'],
+}
+
 
 try:
     from portal.local_settings import *
