@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from portal.settings import EMAIL_USER_NAME, EMAIL_PASSWORD
 # Create your views here.
 
 @require_POST
@@ -25,7 +26,7 @@ def send_email(name,email_subject,reply_email,phone,company_name,email_msg,toadd
         fromaddr = "security portal"
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
-        server.login('bwd.reports@gmail.com', ',fhf,firf2017')
+        server.login(EMAIL_USER_NAME, EMAIL_PASSWORD)
         msg = MIMEMultipart()
         msg['From'] = fromaddr
         msg['To'] = ", ".join(toaddrs)
