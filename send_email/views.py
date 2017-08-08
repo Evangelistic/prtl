@@ -13,7 +13,7 @@ def send(request):
     reply_email = request.POST['reply_email']
     phone = request.POST['phone']
     company_name = request.POST['company_name']
-    email_msg = request.POST['email_msg']
+    email_msg = request.POST['email_msg'].replace('\n', '<br />')
     send_email(name,email_subject,reply_email,phone,company_name,email_msg)
     content = {
         'result' : 'Your letter has been sent'
