@@ -1,5 +1,4 @@
-"""portal URL Configuration
-
+"""
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
 Examples:
@@ -13,13 +12,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
-from django.contrib import admin
+from django.conf.urls import url
+from send_email import views
+
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
+
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^', include('display_ad_data.urls')),
-    url(r'^', include('modify_ad_data.urls')),
-    url(r'^', include('portal_core.urls')),
-    url(r'^', include('send_email.urls')),
+    url(r'^send-email', views.send, name='Send email'),
 ]
