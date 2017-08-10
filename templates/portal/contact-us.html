@@ -16,19 +16,16 @@
                 <div class="row">
                     <div class="col-sm-5 text-center">
                         <div class="gmap">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4708.3351412633365!2d27.535455883278697!3d53.83988342179753!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbd100b5823163%3A0xdc4645c8594f1f21!2z0L_QtdGALiDQkNGB0LDQvdCw0LvQuNC10LLQsCAzLCDQnNC40L3RgdC6LCDQkdC10LvQsNGA0YPRgdGM!5e0!3m2!1sru!2sru!4v1502198120532" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                            <iframe src="{{ company_map }}" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
                         </div>
                     </div>
-
                     <div class="col-sm-7 map-content">
                         <ul class="row">
                             <li class="col-sm-6">
                                 <address>
-                                    <h5>Центральный офис</h5>
-                                    <p>пер. Асаналиева 3<br>
-                                    </p>
-                                    <p>Email:bwd@willesden.by <br>
-                                    Email:sb@willesden.by</p>
+                                    {% for key, value in company_info.items %}
+                                        <p>{{ key }} : {{ value }}</p>
+                                    {% endfor %}
                                 </address>
                             </li>
                         </ul>

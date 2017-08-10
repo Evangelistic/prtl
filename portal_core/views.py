@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from portal.settings import COMPANY_MAP,COMPANY_INFO
 
 
 # Create your views here.
@@ -32,7 +33,11 @@ def blog_item(request):
 
 
 def contact_us(request):
-    return render(request, 'portal/contact-us.html', {'title': 'Security contacts'})
+    return render(request, 'portal/contact-us.html', {
+        'title': 'Security contacts',
+        'company_map': COMPANY_MAP,
+        'company_info': COMPANY_INFO
+    })
 
 
 def portfolio(request):
