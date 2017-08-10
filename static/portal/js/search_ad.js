@@ -4,13 +4,13 @@
 $(function(){
     $(".input-group-btn .dropdown-menu li a").click(function(){
 
-        var selText = $(this).html();
+        var sel_text = $(this).html();
 
-        $(this).parents('.input-group-btn').find('.btn-search').html(selText);   });
+        $(this).parents('.input-group-btn').find('.btn-search').html(sel_text);   });
 
     $(".input-group-btn .dropdown-menu li").click(function(){
-        var selValue =  $(this).attr("value");
+        var sel_value =  $(this).attr("value");
 
-        $('.type_search').attr("value", selValue);
+        $('.type_search').attr("value", sel_value);
     });
 });
