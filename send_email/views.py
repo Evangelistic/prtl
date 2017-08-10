@@ -20,7 +20,7 @@ def send(request):
             'title': 'Security contacts',
             'company_map' : COMPANY_MAP,
             'company_info' : COMPANY_INFO,
-            'result' : 'Ваше сообщения отправлено.'
+            'result' : 'Ваше сообщение отправлено.'
         }
     else:
         content = {
