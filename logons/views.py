@@ -25,7 +25,7 @@ def logons(request):
             with open('//mo02vdc01/compusers$/NameUserComp.txt',"r", newline="") as file:
                 logons = csv.reader((x.replace('\0', '') for x in file),delimiter=';')
                 for logon in logons:
-                    if len(logon) > 2 and logon[0][5:] == input_search:
+                    if len(logon) > 2 and logon[0][5:].strip() == input_search.strip():
                         out.append([logon[0][5:], logon[1][15:], logon[2][13:]])
             content = {
                 'name' : full_name,
@@ -62,7 +62,7 @@ def logons(request):
                 with open('//mo02vdc01/compusers$/NameUserComp.txt', "r", newline="") as file:
                     logons = csv.reader((x.replace('\0', '') for x in file), delimiter=';')
                     for logon in logons:
-                        if len(logon) > 2 and logon[0][5:] == user_login:
+                        if len(logon) > 2 and logon[0][5:].strip() == user_login.strip():
                             out.append([logon[0][5:],logon[1][15:], logon[2][13:]])
                 content = {
                     'name': full_name,
