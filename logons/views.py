@@ -12,8 +12,9 @@ def logons(request):
         type_search = request.GET['type_search']
     except:
         input_search = ''
-        type_search = 'login'
+        type_search = 'full_name'
     out = []
+    print(input_search)
     if type_search == 'login':
         try:
             user = search_in_ad('Person', 'sAMAccountName', input_search)
@@ -53,7 +54,8 @@ def logons(request):
                 'data': [],
             }
             return render(request, 'portal/logons.html', content)
-        else:
+        print(user)
+        if user != []:
             user_login = user[0]['attributes']['sAMAccountName']
             full_name = user[0]['attributes']['cn']
             if user_login != '':
@@ -66,13 +68,13 @@ def logons(request):
                     'name': full_name,
                     'data': list(reversed(out)),
                 }
-            else:
-                out.append(['No data', 'No data'])
-                content = {
-                    'name': '',
-                    'data': list(reversed(out)),
-                }
-            return render(request, 'portal/logons.html', content)
+        else:
+            out.append(['No data', 'No data'])
+            content = {
+                'name': '',
+                'data': list(reversed(out)),
+            }
+        return render(request, 'portal/logons.html', content)
     elif type_search == 'pc':
         with open('//mo02vdc01/compusers$/NameUserComp.txt', "r", newline="") as file:
             logons = csv.reader((x.replace('\0', '') for x in file), delimiter=';')
