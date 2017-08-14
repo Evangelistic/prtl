@@ -18,8 +18,11 @@ def logons(request):
         input_search = request.GET['input_search']
         type_search = request.GET['type_search']
     except:
-        input_search = ''
-        type_search = 'full_name'
+        content = {
+                    'name': '',
+                    'table_flag' : True,
+                }
+        return render(request, 'portal/logons.html', content)
     sync = sync_file_logs()
     print(sync)
     if sync == True:
@@ -84,6 +87,7 @@ def logons(request):
                 out.append(['No data', 'No data', 'No data'])
                 content = {
                     'name': '',
+                    'table_flag': False,
                     'data': list(reversed(out)),
                 }
             return render(request, 'portal/logons.html', content)
@@ -101,6 +105,7 @@ def logons(request):
                     out.append(['No data', 'No data', 'No data'])
                     content = {
                         'name': '',
+                        'table_flag': False,
                         'data': list(reversed(out)),
                     }
                 return render(request,'portal/logons.html',content)
