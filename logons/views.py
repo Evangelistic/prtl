@@ -21,6 +21,7 @@ def logons(request):
         input_search = ''
         type_search = 'full_name'
     sync = sync_file_logs()
+    print(sync)
     if sync == True:
         log_file = LOGONS_LOCAL_LOG_DIR + '\\' + LOGONS_FILE_NAME
         out = []
@@ -51,7 +52,7 @@ def logons(request):
             try:
                 user = search_in_ad('Person', 'cn', input_search)
             except:
-                out.append(['Error', 'Error'])
+                out.append(['Error', 'Error' , 'Error'])
                 content = {
                     'name': '',
                     'data': list(reversed(out)),
@@ -80,7 +81,7 @@ def logons(request):
                         'data': list(reversed(out)),
                     }
             else:
-                out.append(['No data', 'No data'])
+                out.append(['No data', 'No data', 'No data'])
                 content = {
                     'name': '',
                     'data': list(reversed(out)),
@@ -97,7 +98,7 @@ def logons(request):
                             'data': list(reversed(out)),
                         }
                 if out == []:
-                    out.append(['No data', 'No data'])
+                    out.append(['No data', 'No data', 'No data'])
                     content = {
                         'name': '',
                         'data': list(reversed(out)),

@@ -32,5 +32,4 @@ urlpatterns = [
     url(r'^pricing$', views.pricing, name='Pricing'),
     url(r'^services$', views.services, name='Services'),
     url(r'^shortcodes$', views.shortcodes, name='ShortCodes'),
-    url(r'^logons$', views.logons, name='Logons'),
 ]
