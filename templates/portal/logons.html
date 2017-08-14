@@ -65,32 +65,41 @@
         </div>
 
 
-        <h2>{{ name }}</h2>
-        <table class="table table-striped">
-            <thead>
-                <th>
-                    Login
-                </th>
-                <th>
-                    Computer Name
-                </th>
-                <th>
-                    Last logon time
-                </th>
-            </thead>
-            <tbody>
-                {% for iteruser in data %}
-                    <tr>
-                    {% for iterdata in iteruser %}
-                        <td>
-                            {{ iterdata }}
-                        </td>
-                    {% endfor %}
-                    </tr>
+        <h2>{{ name }} </h2>
+        {% if users %}
+            <ul>
+                {% for user in data %}
+                    <li>{{ user }}</li>
                 {% endfor %}
-            </tbody>
-        </table>
+            </ul>
+        {% endif %}
 
+        {% if not users %}
+            <table class="table table-striped">
+                <thead>
+                    <th>
+                        Login
+                    </th>
+                    <th>
+                        Computer Name
+                    </th>
+                    <th>
+                        Last logon time
+                    </th>
+                </thead>
+                <tbody>
+                    {% for iteruser in data %}
+                        <tr>
+                        {% for iterdata in iteruser %}
+                            <td>
+                                {{ iterdata }}
+                            </td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
 
     </section>
 {% endblock %}

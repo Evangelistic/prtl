@@ -14,7 +14,6 @@ def logons(request):
         input_search = ''
         type_search = 'full_name'
     out = []
-    print(input_search)
     if type_search == 'login':
         try:
             user = search_in_ad('Person', 'sAMAccountName', input_search)
@@ -49,12 +48,16 @@ def logons(request):
             }
             return render(request, 'portal/logons.html', content)
         if len(user) > 1:
+            for u in user:
+                out.append(u['attributes']['cn'])
+            for user in out:
+                print(user)
             content = {
-                'name': 'Конкретезируйте запрос',
-                'data': [],
+                'name': 'Найдено несколь пользователей',
+                'data': out,
+                'users' : 'True',
             }
             return render(request, 'portal/logons.html', content)
-        print(user)
         if user != []:
             user_login = user[0]['attributes']['sAMAccountName']
             full_name = user[0]['attributes']['cn']
@@ -78,7 +81,6 @@ def logons(request):
     elif type_search == 'pc':
         with open('//mo02vdc01/compusers$/NameUserComp.txt', "r", newline="") as file:
             logons = csv.reader((x.replace('\0', '') for x in file), delimiter=';')
-            print(logons)
             for logon in logons:
                 if len(logon) > 2 and logon[1][15:].strip() == input_search.strip().upper():
                     out.append([logon[0][5:], logon[1][15:], logon[2][13:]])
