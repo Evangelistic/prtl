@@ -39,6 +39,8 @@ def contact_us(request):
         'company_info': COMPANY_INFO
     })
 
+def logons(request):
+    return render(request, 'portal/logons.html', {'table_flag': True})
 
 def portfolio(request):
     return render(request, 'portal/portfolio.html', {'title': 'Portfolio'})

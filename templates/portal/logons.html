@@ -66,15 +66,14 @@
 
 
         <h2>{{ name }} </h2>
-        {% if users %}
+        {% if table_flag %}
             <ul>
                 {% for user in data %}
                     <li>{{ user }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
-
-        {% if not users %}
+        {% if not table_flag %}
             <table class="table table-striped">
                 <thead>
                     <th>
