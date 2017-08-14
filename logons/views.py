@@ -50,8 +50,6 @@ def logons(request):
         if len(user) > 1:
             for u in user:
                 out.append(u['attributes']['cn'])
-            for user in out:
-                print(user)
             content = {
                 'name': 'Найдено несколько пользователей',
                 'data': out,
