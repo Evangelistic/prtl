@@ -53,7 +53,7 @@ def logons(request):
             for user in out:
                 print(user)
             content = {
-                'name': 'Найдено несколь пользователей',
+                'name': 'Найдено несколько пользователей',
                 'data': out,
                 'users' : 'True',
             }
