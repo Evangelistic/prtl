@@ -2527,6 +2527,19 @@ shortcodes page css
 
 .input-group-btn li:hover{  background: #dedede;}
 
+#drp_autogen0{
+	padding: .55em !important;
+
+	padding-left: 0px;
+
+	padding-right: 0px;
+
+	background: #fff !important;
+
+	border-radius: 0px;
+
+	margin-right: 0em;
+}
 
 
 
