@@ -10,12 +10,8 @@ from logons.models import search_in_ad, sync_file_logs
 @require_GET
 def logons(request):
     content = {'table_flag': True}
-    try:
-        input_search = request.GET['input_search']
-        type_search = request.GET['type_search']
-    except NameError:
-        content = {'name': '', 'table_flag': True}
-        return render(request, 'portal/logons.html', content)
+    input_search = request.GET.get('input_search',False)
+    type_search = request.GET.get('type_search',False)
     sync = sync_file_logs()
     if sync:
         log_file = LOGONS_LOCAL_LOG_DIR + '\\' + LOGONS_FILE_NAME
@@ -96,6 +92,9 @@ def logons(request):
                         'table_flag': True,
                     }
                 return render(request, 'portal/logons.html', content)
+        else:
+            content = {'name': '', 'table_flag': True}
+            return render(request, 'portal/logons.html', content)
     else:
         content = {
             'name': 'Не удалось получить информацию',
