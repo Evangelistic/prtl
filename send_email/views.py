@@ -14,25 +14,25 @@ def send(request):
     phone = request.POST['phone']
     company_name = request.POST['company_name']
     email_msg = request.POST['email_msg'].replace('\n', '<br />')
-    res = send_email(name,email_subject,reply_email,phone,company_name,email_msg)
+    res = send_email(name, email_subject, reply_email, phone, company_name, email_msg)
     if res == 0:
         content = {
             'title': 'Security contacts',
-            'company_map' : COMPANY_MAP,
-            'company_info' : COMPANY_INFO,
-            'result' : 'Ваше сообщение отправлено.'
+            'company_map': COMPANY_MAP,
+            'company_info': COMPANY_INFO,
+            'result': 'Ваше сообщение отправлено.'
         }
     else:
         content = {
             'title': 'Security contacts',
             'company_map': COMPANY_MAP,
             'company_info': COMPANY_INFO,
-            'result' : 'При отправке произошла ошибка. Попробуйте позже.'
+            'result': 'При отправке произошла ошибка. Попробуйте позже.'
         }
-    return render(request,'portal/contact-us.html', content)
+    return render(request, 'portal/contact-us.html', content)
 
 
-def send_email(name,email_subject,reply_email,phone,company_name,email_msg,toaddrs = EMAIL_DEFAULT_LIST):
+def send_email(name, email_subject, reply_email, phone, company_name, email_msg, toaddrs=EMAIL_DEFAULT_LIST):
     try:
         fromaddr = "security portal"
         server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -43,7 +43,7 @@ def send_email(name,email_subject,reply_email,phone,company_name,email_msg,toadd
         msg['To'] = ", ".join(toaddrs)
         msg['Subject'] = email_subject
         body = "<p>Ahtung,  nicht arbeiten!!!</p><br>\
-        Name: "+ name +"<br>\
+        Name: " + name + "<br>\
         Reply_email: " + reply_email + "<br>\
         Phone: " + phone + "<br>\
         Company_name: " + company_name + "<br><br>\
@@ -54,5 +54,5 @@ def send_email(name,email_subject,reply_email,phone,company_name,email_msg,toadd
         server.sendmail(fromaddr, toaddrs, text)
         server.quit()
         return 0
-    except:
+    except SystemError:
         return 1
