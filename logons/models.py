@@ -1,11 +1,13 @@
-from django.db import models
+# from django.db import models
 from ldap3 import Server, Connection, ALL, NTLM, SUBTREE
 import socket
 import os
 from smb.SMBConnection import SMBConnection
 import logging
-from portal.settings import AD_USER_LS, AD_PWD_LS, AD_SERVER_LS, AD_BASE_LS, AD_ATTR_LS, LOGONS_LOG_DIR,\
+from portal.settings import AD_USER_LS, AD_PWD_LS, AD_SERVER_LS, AD_BASE_LS, AD_ATTR_LS, LOGONS_LOG_DIR, \
     LOGONS_LOGON_SHARE, LOGONS_PASSWORD, LOGONS_SERVER, LOGONS_USERNAME, LOGONS_LOCAL_LOG_DIR
+
+
 # Create your models here.
 
 
@@ -137,4 +139,4 @@ class Smb(object):
 
 def sync_file_logs():
     smb = Smb(LOGONS_USERNAME, LOGONS_PASSWORD, LOGONS_SERVER, LOGONS_LOGON_SHARE)
-    return smb.sync_dir_over_smb(smb_folder = LOGONS_LOG_DIR, local_folder = LOGONS_LOCAL_LOG_DIR)
+    return smb.sync_dir_over_smb(smb_folder=LOGONS_LOG_DIR, local_folder=LOGONS_LOCAL_LOG_DIR)
