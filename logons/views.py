@@ -10,8 +10,8 @@ from logons.models import search_in_ad, sync_file_logs
 @require_GET
 def logons(request):
     content = {'table_flag': True}
-    input_search = request.GET.get('input_search',False)
-    type_search = request.GET.get('type_search',False)
+    input_search = request.GET.get('input_search', False)
+    type_search = request.GET.get('type_search', False)
     sync = sync_file_logs()
     if sync:
         log_file = LOGONS_LOCAL_LOG_DIR + '\\' + LOGONS_FILE_NAME
