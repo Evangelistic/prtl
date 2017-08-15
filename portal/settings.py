@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'security_portal',
     'portal',
     'send_email',
+    'acs_logs',
 ]
 
 MIDDLEWARE = [

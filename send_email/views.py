@@ -42,8 +42,7 @@ def send_email(name,email_subject,reply_email,phone,company_name,email_msg,toadd
         msg['From'] = fromaddr
         msg['To'] = ", ".join(toaddrs)
         msg['Subject'] = email_subject
-        body = "<p>Ahtung,  nicht arbeiten!!!</p><br>\
-        Name: "+ name +"<br>\
+        body = "Name: "+ name +"<br>\
         Reply_email: " + reply_email + "<br>\
         Phone: " + phone + "<br>\
         Company_name: " + company_name + "<br><br>\

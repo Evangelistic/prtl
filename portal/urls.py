@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^', include('portal_core.urls')),
     url(r'^', include('api.urls')),
     url(r'^', include('send_email.urls')),
+    url(r'^', include('acs_logs.urls')),
 ]
