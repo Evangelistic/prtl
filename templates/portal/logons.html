@@ -69,7 +69,15 @@
         {% if table_flag %}
             <ul>
                 {% for user in data %}
-                    <li>{{ user }}</li>
+                    <form method="GET" class="navbar-form navbar-search get-form" role="search">
+                        <li>{{ user }}
+                            <input type="hidden" name="input_search" value="{{ user }}">
+                            <input type="hidden" name="type_search" value="full_name">
+                                <button type="submit" class="btn btn-search btn-default btn-sm">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </li>
+                    </form>
                 {% endfor %}
             </ul>
         {% endif %}
