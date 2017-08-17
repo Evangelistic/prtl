@@ -29,7 +29,7 @@ def logons(request):
                     'name': full_name,
                     'data': list(reversed(out)),
                 }
-            elif len(user) > 1:
+            elif user and len(user) > 1:
                 content = {
                     'name': 'Найдено больше одного пользователя. Уточните запрос.',
                     'table_flag': True
