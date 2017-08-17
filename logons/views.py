@@ -17,12 +17,9 @@ def logons(request):
         log_file = LOGONS_LOCAL_LOG_DIR + '\\' + LOGONS_FILE_NAME
         out = []
         if type_search == 'login':
-            try:
-                user = search_in_ad('Person', 'sAMAccountName', input_search)
+            user = search_in_ad('Person', 'sAMAccountName', input_search)
+            if user and len(user) == 1:
                 full_name = user[0]['attributes']['cn']
-            except NameError:
-                full_name = ''
-            if full_name != '':
                 with open(log_file, "r", newline="") as file:
                     user_logons = csv.reader((x.replace('\0', '') for x in file), delimiter=';')
                     for logon in user_logons:
@@ -32,11 +29,19 @@ def logons(request):
                     'name': full_name,
                     'data': list(reversed(out)),
                 }
+            elif len(user) > 1:
+                content = {
+                    'name': 'Найдено больше одного пользователя. Уточните запрос.',
+                    'table_flag': True
+                }
             else:
                 content = {
                     'name': 'Пользователь с таким логином не найден',
                     'table_flag': True
                 }
+            content.update({'type_search': type_search})
+            content.update({'text': input_search})
+            content.update({'search': '<span class="fa fa-user">Search By Login</span>'})
             return render(request, 'portal/logons.html', content)
         elif type_search == 'full_name':
             try:
@@ -47,6 +52,9 @@ def logons(request):
                     'name': '',
                     'data': list(reversed(out)),
                 }
+                content.update({'type_search': type_search})
+                content.update({'text': input_search})
+                content.update({'search': '<span class="fa fa-address-card">Search By Full name</span>'})
                 return render(request, 'portal/logons.html', content)
             if len(user) > 1:
                 for u in user:
@@ -56,6 +64,9 @@ def logons(request):
                     'data': out,
                     'table_flag': True,
                 }
+                content.update({'type_search': type_search})
+                content.update({'text': input_search})
+                content.update({'search': '<span class="fa fa-address-card">Search By Full name</span>'})
                 return render(request, 'portal/logons.html', content)
             if user:
                 user_login = user[0]['attributes']['sAMAccountName']
@@ -75,6 +86,9 @@ def logons(request):
                     'name': 'Пользователь с таким именем не найден',
                     'table_flag': True,
                 }
+            content.update({'type_search': type_search})
+            content.update({'text': input_search})
+            content.update({'search': '<span class="fa fa-address-card">Search By Full name</span>'})
             return render(request, 'portal/logons.html', content)
         elif type_search == 'pc':
             with open(log_file, "r", newline="") as file:
@@ -91,9 +105,17 @@ def logons(request):
                         'name': 'ПК с такими именем не найден',
                         'table_flag': True,
                     }
+                content.update({'type_search': type_search})
+                content.update({'text': input_search})
+                content.update({'search': '<span class="fa fa-desktop">Search By PC</span>'})
                 return render(request, 'portal/logons.html', content)
         else:
-            content = {'name': '', 'table_flag': True}
+            content = {'name': '',
+                       'table_flag': True,
+                       'type_search': 'full_name',
+                       'search': '<span class="fa fa-desktop">Search By PC</span>',
+                       'text': ''
+                       }
             return render(request, 'portal/logons.html', content)
     else:
         content = {

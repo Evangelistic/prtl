@@ -23,8 +23,8 @@
                         <div class="input-group">
 
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown" name="type_search" value="login">
-                                    <span class="fa fa-address-card"></span>Search By Full name</span>
+                                <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown" name="type_search" value="{{ type_search }}">
+                                    {% autoescape off %}{{ search }}{% endautoescape %}
                                     <span class="caret"></span>
                                 </button>
                                 <input type="hidden" class="type_search" value="full_name" name="type_search">
@@ -47,7 +47,7 @@
                                 </ul>
                             </div>
 
-                            <input type="text" class="form-control" placeholder="Search" name="input_search" minlength="3">
+                            <input type="text" class="form-control" placeholder="Search" name="input_search" minlength="3" value="{{ text }}">
 
                             <div class="input-group-btn">
                                 <button type="submit" class="btn btn-search btn-default">
