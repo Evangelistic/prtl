@@ -32,7 +32,8 @@ def send(request):
     return render(request, 'portal/contact-us.html', content)
 
 
-def send_email(name: str, email_subject: str, email_msg: str, reply_email: str = '', phone: str = '', company_name: str = '',
+def send_email(name: str, email_subject: str, email_msg: str, reply_email: str = '', phone: str = '',
+               company_name: str = '',
                toaddrs: list = EMAIL_DEFAULT_LIST) -> int:
     """
     :return: 

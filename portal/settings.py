@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'bootstrap3',
     'ldap3',
     'rest_framework',
+    'logons',
 ]
 
 MIDDLEWARE = [

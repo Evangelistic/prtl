@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^', include('modify_ad_data.urls')),
     url(r'^', include('portal_core.urls')),
     url(r'^', include('send_email.urls')),
+    url(r'^', include('logons.urls')),
 ]

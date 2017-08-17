@@ -1,0 +1,113 @@
+{%  extends 'portal/base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock %}
+
+{%  block content %}
+
+    <section id="ad_search" class="container">
+        <div class="center">
+            <h2>Logons Search</h2>
+            <p class="lead"></p>
+        </div>
+
+
+        <div class="row">
+
+            <nav class="">
+                <div class="nav nav-justified navbar-nav">
+
+                    <form method="GET" class="navbar-form navbar-search get-form" role="search">
+                        <div class="input-group">
+
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-search btn-default dropdown-toggle" data-toggle="dropdown" name="type_search" value="{{ type_search }}">
+                                    {% autoescape off %}{{ search }}{% endautoescape %}
+                                    <span class="caret"></span>
+                                </button>
+                                <input type="hidden" class="type_search" value="full_name" name="type_search">
+                                <ul class="dropdown-menu pull-left" role="menu">
+                                    <li value="full_name">
+                                        <a href="#">
+                                            <span class="fa fa-address-card">Search By Full name</span>
+                                        </a>
+                                    </li>
+                                    <li value="login">
+                                        <a href="#">
+                                            <span class="fa fa-user">Search By Login</span>
+                                        </a>
+                                    </li>
+                                    <li value="pc">
+                                        <a href="#">
+                                            <span class="fa fa-desktop">Search By PC</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <input type="text" class="form-control" placeholder="Search" name="input_search" minlength="3" value="{{ text }}">
+
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-search btn-default">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </nav>
+        </div>
+
+
+        <h2>{{ name }} </h2>
+        {% if table_flag %}
+            <ul>
+                {% for user in data %}
+                    <form method="GET" class="navbar-form navbar-search get-form" role="search">
+                        <li>{{ user }}
+                            <input type="hidden" name="input_search" value="{{ user }}">
+                            <input type="hidden" name="type_search" value="full_name">
+                                <button type="submit" class="btn btn-search btn-default btn-sm">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </li>
+                    </form>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if not table_flag %}
+            <table class="table table-striped">
+                <thead>
+                    <th>
+                        Login
+                    </th>
+                    <th>
+                        Computer Name
+                    </th>
+                    <th>
+                        Last logon time
+                    </th>
+                </thead>
+                <tbody>
+                    {% for iteruser in data %}
+                        <tr>
+                        {% for iterdata in iteruser %}
+                            <td>
+                                {{ iterdata }}
+                            </td>
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+    </section>
+{% endblock %}
+
+{% block user_scripts %}
+    <script src="{% static 'portal/js/search_ad.js' %}"></script>
+{% endblock %}
