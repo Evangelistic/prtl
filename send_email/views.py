@@ -14,25 +14,38 @@ def send(request):
     phone = request.POST['phone']
     company_name = request.POST['company_name']
     email_msg = request.POST['email_msg'].replace('\n', '<br />')
-    res = send_email(name,email_subject,reply_email,phone,company_name,email_msg)
+    res = send_email(name, email_subject, email_msg, reply_email, phone, company_name)
     if res == 0:
         content = {
             'title': 'Security contacts',
-            'company_map' : COMPANY_MAP,
-            'company_info' : COMPANY_INFO,
-            'result' : 'Ваше сообщение отправлено.'
+            'company_map': COMPANY_MAP,
+            'company_info': COMPANY_INFO,
+            'result': 'Ваше сообщение отправлено.'
         }
     else:
         content = {
             'title': 'Security contacts',
             'company_map': COMPANY_MAP,
             'company_info': COMPANY_INFO,
-            'result' : 'При отправке произошла ошибка. Попробуйте позже.'
+            'result': 'При отправке произошла ошибка. Попробуйте позже.'
         }
-    return render(request,'portal/contact-us.html', content)
+    return render(request, 'portal/contact-us.html', content)
 
 
-def send_email(name,email_subject,reply_email,phone,company_name,email_msg,toaddrs = EMAIL_DEFAULT_LIST):
+def send_email(name: str, email_subject: str, email_msg: str, reply_email: str = '', phone: str = '', company_name: str = '',
+               toaddrs: list = EMAIL_DEFAULT_LIST) -> int:
+    """
+    :return: 
+    :param name: required
+    :param email_subject: required
+    :param email_msg: required
+    :param reply_email: not required
+    :param phone: not required
+    :param company_name: not required
+    :param toaddrs: not required
+    :return: 0 success
+    :return: 1 fail
+    """
     try:
         fromaddr = "security portal"
         server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -42,17 +55,18 @@ def send_email(name,email_subject,reply_email,phone,company_name,email_msg,toadd
         msg['From'] = fromaddr
         msg['To'] = ", ".join(toaddrs)
         msg['Subject'] = email_subject
-        body = "<p>Ahtung,  nicht arbeiten!!!</p><br>\
-        Name: "+ name +"<br>\
-        Reply_email: " + reply_email + "<br>\
-        Phone: " + phone + "<br>\
-        Company_name: " + company_name + "<br><br>\
-        Text: " + email_msg + "<br>\
-        "
+        body = "Name: " + name + "<br>"
+        if reply_email != '':
+            body += "Reply_email: " + reply_email + "<br>"
+        if phone != '':
+            body += "Phone: " + phone + "<br>"
+        if company_name != '':
+            body += "Company_name: " + company_name + "<br><br>"
+        body += "Text: " + email_msg + "<br>"
         msg.attach(MIMEText(body, _subtype='html'))
         text = msg.as_string()
         server.sendmail(fromaddr, toaddrs, text)
         server.quit()
         return 0
-    except:
+    except Warning:
         return 1
