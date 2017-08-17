@@ -47,10 +47,9 @@ def logons(request):
             try:
                 user = search_in_ad('Person', 'cn', input_search)
             except NameError:
-                out.append(['Error', 'Error', 'Error'])
                 content = {
-                    'name': '',
-                    'data': list(reversed(out)),
+                    'name': 'Error',
+                    'table_flag': True
                 }
                 content.update({'type_search': type_search})
                 content.update({'text': input_search})
@@ -68,7 +67,7 @@ def logons(request):
                 content.update({'text': input_search})
                 content.update({'search': '<span class="fa fa-address-card">Search By Full name</span>'})
                 return render(request, 'portal/logons.html', content)
-            if user:
+            if len(user) == 1:
                 user_login = user[0]['attributes']['sAMAccountName']
                 full_name = user[0]['attributes']['cn']
                 if user_login != '':
