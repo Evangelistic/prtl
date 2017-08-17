@@ -18,7 +18,7 @@ def logons(request):
         out = []
         if type_search == 'login':
             user = search_in_ad('Person', 'sAMAccountName', input_search)
-            if user and len(user) == 1:
+            if len(user) == 1:
                 full_name = user[0]['attributes']['cn']
                 with open(log_file, "r", newline="") as file:
                     user_logons = csv.reader((x.replace('\0', '') for x in file), delimiter=';')
@@ -29,7 +29,7 @@ def logons(request):
                     'name': full_name,
                     'data': list(reversed(out)),
                 }
-            elif user and len(user) > 1:
+            elif len(user) > 1:
                 content = {
                     'name': 'Найдено больше одного пользователя. Уточните запрос.',
                     'table_flag': True
