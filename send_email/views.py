@@ -32,17 +32,19 @@ def send(request):
     return render(request, 'portal/contact-us.html', content)
 
 
-def send_email(name, email_subject, email_msg, reply_email='', phone='', company_name='', toaddrs=EMAIL_DEFAULT_LIST):
+def send_email(name: str, email_subject: str, email_msg: str, reply_email: str = '', phone: str = '', company_name: str = '',
+               toaddrs: list = EMAIL_DEFAULT_LIST) -> int:
     """
-
-    :param name: str, required
-    :param email_subject: str, required
-    :param email_msg: srt, required
-    :param reply_email: srt, not required
-    :param phone: srt, not required
-    :param company_name: srt, not required
-    :param toaddrs: srt, not required
-    :return:
+    :return: 
+    :param name: required
+    :param email_subject: required
+    :param email_msg: required
+    :param reply_email: not required
+    :param phone: not required
+    :param company_name: not required
+    :param toaddrs: not required
+    :return: 0 success
+    :return: 1 fail
     """
     try:
         fromaddr = "security portal"
