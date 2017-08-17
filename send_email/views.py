@@ -14,25 +14,36 @@ def send(request):
     phone = request.POST['phone']
     company_name = request.POST['company_name']
     email_msg = request.POST['email_msg'].replace('\n', '<br />')
-    res = send_email(name,email_subject,email_msg,reply_email,phone,company_name)
+    res = send_email(name, email_subject, email_msg, reply_email, phone, company_name)
     if res == 0:
         content = {
             'title': 'Security contacts',
-            'company_map' : COMPANY_MAP,
-            'company_info' : COMPANY_INFO,
-            'result' : 'Ваше сообщение отправлено.'
+            'company_map': COMPANY_MAP,
+            'company_info': COMPANY_INFO,
+            'result': 'Ваше сообщение отправлено.'
         }
     else:
         content = {
             'title': 'Security contacts',
             'company_map': COMPANY_MAP,
             'company_info': COMPANY_INFO,
-            'result' : 'При отправке произошла ошибка. Попробуйте позже.'
+            'result': 'При отправке произошла ошибка. Попробуйте позже.'
         }
-    return render(request,'portal/contact-us.html', content)
+    return render(request, 'portal/contact-us.html', content)
 
 
-def send_email(name,email_subject,email_msg,reply_email='',phone='',company_name='',toaddrs=EMAIL_DEFAULT_LIST):
+def send_email(name, email_subject, email_msg, reply_email='', phone='', company_name='', toaddrs=EMAIL_DEFAULT_LIST):
+    """
+
+    :param name: str, required
+    :param email_subject: str, required
+    :param email_msg: srt, required
+    :param reply_email: srt, not required
+    :param phone: srt, not required
+    :param company_name: srt, not required
+    :param toaddrs: srt, not required
+    :return:
+    """
     try:
         fromaddr = "security portal"
         server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -42,7 +53,7 @@ def send_email(name,email_subject,email_msg,reply_email='',phone='',company_name
         msg['From'] = fromaddr
         msg['To'] = ", ".join(toaddrs)
         msg['Subject'] = email_subject
-        body = "Name: "+ name +"<br>"
+        body = "Name: " + name + "<br>"
         if reply_email != '':
             body += "Reply_email: " + reply_email + "<br>"
         if phone != '':
