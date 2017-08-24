@@ -1,3 +1,4 @@
+# coding=utf-8
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 from portal.settings import LOGONS_LOCAL_LOG_DIR, LOGONS_FILE_NAME
