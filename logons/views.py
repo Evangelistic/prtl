@@ -36,7 +36,7 @@ def logons(request):
                 }
             else:
                 content = {
-                    'name': 'Пользователь с таким логином не найден',
+                    'name': 'Пользователь с таким логином не найден.',
                     'table_flag': True
                 }
             content.update({'type_search': type_search})
@@ -59,7 +59,7 @@ def logons(request):
                 for u in user:
                     out.append(u['attributes']['cn'])
                 content = {
-                    'name': 'Найдено несколько пользователей',
+                    'name': 'Найдено несколько пользователей.',
                     'data': out,
                     'table_flag': True,
                 }
@@ -82,7 +82,7 @@ def logons(request):
                     }
             else:
                 content = {
-                    'name': 'Пользователь с таким именем не найден',
+                    'name': 'Пользователь с таким именем не найден.',
                     'table_flag': True,
                 }
             content.update({'type_search': type_search})
@@ -101,7 +101,7 @@ def logons(request):
                         }
                 if not out:
                     content = {
-                        'name': 'ПК с такими именем не найден',
+                        'name': 'ПК с такими именем не найден.',
                         'table_flag': True,
                     }
                 content.update({'type_search': type_search})
@@ -118,7 +118,7 @@ def logons(request):
             return render(request, 'portal/logons.html', content)
     else:
         content = {
-            'name': 'Не удалось получить информацию',
+            'name': 'Не удалось получить информацию.',
             'table_flag': True,
         }
         return render(request, 'portal/logons.html', content)
