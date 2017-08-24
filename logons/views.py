@@ -112,7 +112,7 @@ def logons(request):
             content = {'name': '',
                        'table_flag': True,
                        'type_search': 'full_name',
-                       'search': '<span class="fa fa-desktop">Search By PC</span>',
+                       'search': '<span class="fa fa-address-card">Search By Full name</span>',
                        'text': ''
                        }
             return render(request, 'portal/logons.html', content)
