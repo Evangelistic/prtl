@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
-from portal.settings import LOGONS_LOCAL_LOG_DIR, LOGONS_FILE_NAME
+from django.conf import settings
 import csv
 from logons.models import search_in_ad, sync_file_logs
 
@@ -15,7 +15,7 @@ def logons(request):
     type_search = request.GET.get('type_search', False)
     sync = sync_file_logs()
     if sync:
-        log_file = LOGONS_LOCAL_LOG_DIR + '\\' + LOGONS_FILE_NAME
+        log_file = settings.LOGONS_LOCAL_LOG_DIR + '\\' + settings.LOGONS_FILE_NAME
         out = []
         if type_search == 'login':
             user = search_in_ad('Person', 'sAMAccountName', input_search)
