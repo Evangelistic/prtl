@@ -1,4 +1,4 @@
-from portal.settings import AD_USER_LS, AD_PWD_LS, AD_SERVER_LS, AD_BASE_LS, AD_ATTR_LS
+from django.conf import settings
 from ldap3 import Server, Connection, ALL, NTLM, SUBTREE, MODIFY_REPLACE, MODIFY_ADD
 
 # from django.db import models
@@ -17,16 +17,17 @@ def search_in_ad(type_object, type_search, who_is):
     :param who_is: value of type_search
     :return: dn value, this function return only one user data
     """
-    server = Server(AD_SERVER_LS, get_info=ALL)
-    user = AD_USER_LS
-    pwd = AD_PWD_LS
-    attr = AD_ATTR_LS
+
+    server = Server(settings.AD_SERVER_LS, get_info=ALL)
+    user = settings.AD_USER_LS
+    pwd = settings.AD_PWD_LS
+    attr = settings.AD_ATTR_LS
     c = Connection(server, user=user, password=pwd, authentication=NTLM, auto_bind=True)
     entry_list = c.extend.standard.paged_search(
-        search_base=AD_BASE_LS,
+        search_base=settings.AD_BASE_LS,
         search_filter='(&(objectCategory=CN=' +
                       type_object +
-                      ',CN=Schema,CN=Configuration,' + AD_BASE_LS + ')(' +
+                      ',CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')(' +
                       type_search + '=' + who_is + '))',
         search_scope=SUBTREE,
         attributes=attr[type_object],
@@ -57,9 +58,9 @@ def modify_in_ad(data_dn, type_attribute, new_value_attr):
     :return:
     """
 
-    server = Server(AD_SERVER_LS, get_info=ALL)
-    user = AD_USER_LS
-    pwd = AD_PWD_LS
+    server = Server(settings.AD_SERVER_LS, get_info=ALL)
+    user = settings.AD_USER_LS
+    pwd = settings.AD_PWD_LS
     c = Connection(server, user=user, password=pwd, authentication=NTLM, auto_bind=True)
 
     try:
@@ -82,7 +83,7 @@ def modify_in_ad(data_dn, type_attribute, new_value_attr):
                     type_attribute: [(MODIFY_ADD, [new_value_attr])]
                 }
             )
-    except:
+    except Warning:
         print('function modify_in_ad failed')
 
     c.unbind()
