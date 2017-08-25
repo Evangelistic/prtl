@@ -27,7 +27,7 @@ def ad_modify(request):
         who_is = request.POST['input_search'].split()[0]
         new_value_attr = ' '.join(request.POST['input_search'].split()[1:])
         type_attribute = AD_ATTRIBUTE[request.POST['type_search']]
-    except:
+    except None:
         who_is = ''
         type_attribute = 'full_name'
     if who_is == '':
