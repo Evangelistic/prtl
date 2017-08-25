@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-sm-5 text-center">
                         <div class="gmap">
-                            <iframe src="{{ company_map }}" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                            {% autoescape off %}{{ company_map }}{% endautoescape %}
                         </div>
                     </div>
                     <div class="col-sm-7 map-content">
