@@ -22,7 +22,7 @@ def search_in_ad(type_object, type_search, who_is):
     """
     server = Server(settings.AD_SERVER_LS, get_info=ALL)
     user = settings.AD_USER_LS
-    pwd = settings.settings.AD_PWD_LS
+    pwd = settings.AD_PWD_LS
     attr = settings.AD_ATTR_LS
     c = Connection(server, user=user, password=pwd, authentication=NTLM, auto_bind=True)
     entry_list = c.extend.standard.paged_search(
@@ -135,5 +135,5 @@ class Smb(object):
 
 
 def sync_file_logs():
-    smb = Smb(settings.AD_USER_LS, settings.AD_PWD_LS, settings.AD_SERVER_LS, settings.LOGONS_SHARE)
+    smb = Smb(settings.LOGONS_USER, settings.AD_PWD_LS, settings.AD_SERVER_LS, settings.LOGONS_SHARE)
     return smb.sync_dir_over_smb(smb_folder=settings.LOGONS_LOG_DIR, local_folder=settings.LOGONS_LOCAL_LOG_DIR)
