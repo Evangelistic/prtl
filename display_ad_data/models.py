@@ -1,4 +1,4 @@
-from portal.settings import AD_USER_LS, AD_PWD_LS, AD_SERVER_LS, AD_BASE_LS
+from django.conf import settings
 from ldap3 import Server, Connection, ALL, NTLM, SUBTREE
 import datetime
 
@@ -25,9 +25,9 @@ def search_ad_data(input_search, type_search):
     :param type_search:
     :return:
     """
-    server = Server(AD_SERVER_LS, get_info=ALL)
-    user = AD_USER_LS
-    pwd = AD_PWD_LS
+    server = Server(settings.AD_SERVER_LS, get_info=ALL)
+    user = settings.AD_USER_LS
+    pwd = settings.AD_PWD_LS
     c = Connection(server, user=user, password=pwd, authentication=NTLM, auto_bind=True)
 
     if type_search == 'last_logon':
@@ -36,8 +36,8 @@ def search_ad_data(input_search, type_search):
         ad_filter = '(' + AD_ATTRIBUTE[type_search] + '=' + input_search + ')'
 
     entry_list = c.extend.standard.paged_search(
-        search_base=AD_BASE_LS,
-        search_filter='(&(objectCategory=CN=Person,CN=Schema,CN=Configuration,' + AD_BASE_LS + ')' + ad_filter + ')',
+        search_base=settings.AD_BASE_LS,
+        search_filter='(&(objectCategory=CN=Person,CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')' + ad_filter + ')',
         search_scope=SUBTREE,
         attributes=['cn', 'objectCategory', 'mail', 'sAMAccountName', 'lastLogon'],
         paged_size=5,
@@ -80,16 +80,16 @@ def search_ad_data_group(input_search, type_search):
     :param type_search:
     :return:
     """
-    server = Server(AD_SERVER_LS, get_info=ALL)
-    user = AD_USER_LS
-    pwd = AD_PWD_LS
+    server = Server(settings.AD_SERVER_LS, get_info=ALL)
+    user = settings.AD_USER_LS
+    pwd = settings.AD_PWD_LS
 
     ad_filter = '(' + AD_ATTRIBUTE[type_search] + '=' + input_search + ')'
 
     c = Connection(server, user=user, password=pwd, authentication=NTLM, auto_bind=True)
     entry_list = c.extend.standard.paged_search(
-        search_base=AD_BASE_LS,
-        search_filter='(&(objectCategory=CN=Group,CN=Schema,CN=Configuration,' + AD_BASE_LS + ')' + ad_filter + ')',
+        search_base=settings.AD_BASE_LS,
+        search_filter='(&(objectCategory=CN=Group,CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')' + ad_filter + ')',
         search_scope=SUBTREE,
         attributes=['cn', 'description', 'member', 'whenChanged', 'whenCreated'],
         paged_size=5,
@@ -126,9 +126,9 @@ def compare_user_group(input_search):
     :param input_search:
     :return:
     """
-    server = Server(AD_SERVER_LS, get_info=ALL)
-    user = AD_USER_LS
-    pwd = AD_PWD_LS
+    server = Server(settings.AD_SERVER_LS, get_info=ALL)
+    user = settings.AD_USER_LS
+    pwd = settings.AD_PWD_LS
     c = Connection(server, user=user, password=pwd, authentication=NTLM, auto_bind=True)
     ad_data = {}
     for ad_login in input_search:
@@ -137,8 +137,8 @@ def compare_user_group(input_search):
         ad_filter = '(member=' + cn + ')'
 
         entry_list = c.extend.standard.paged_search(
-            search_base=AD_BASE_LS,
-            search_filter='(&(objectCategory=CN=Group,CN=Schema,CN=Configuration,' + AD_BASE_LS + ')' + ad_filter + ')',
+            search_base=settings.AD_BASE_LS,
+            search_filter='(&(objectCategory=CN=Group,CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')' + ad_filter + ')',
             search_scope=SUBTREE,
             attributes=['cn', 'description', 'member', 'whenChanged', 'whenCreated'],
             paged_size=5,
