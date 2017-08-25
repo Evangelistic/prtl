@@ -3,7 +3,7 @@ from django.views.decorators.http import require_POST
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from portal.settings import EMAIL_USER_NAME, EMAIL_PASSWORD, EMAIL_DEFAULT_LIST, COMPANY_MAP, COMPANY_INFO
+from django.conf import settings
 
 
 @require_POST
@@ -18,15 +18,15 @@ def send(request):
     if res == 0:
         content = {
             'title': 'Security contacts',
-            'company_map': COMPANY_MAP,
-            'company_info': COMPANY_INFO,
+            'company_map': settings.COMPANY_MAP,
+            'company_info': settings.COMPANY_INFO,
             'result': 'Ваше сообщение отправлено.'
         }
     else:
         content = {
             'title': 'Security contacts',
-            'company_map': COMPANY_MAP,
-            'company_info': COMPANY_INFO,
+            'company_map': settings.COMPANY_MAP,
+            'company_info': settings.COMPANY_INFO,
             'result': 'При отправке произошла ошибка. Попробуйте позже.'
         }
     return render(request, 'portal/contact-us.html', content)
@@ -34,7 +34,7 @@ def send(request):
 
 def send_email(name: str, email_subject: str, email_msg: str, reply_email: str = '', phone: str = '',
                company_name: str = '',
-               toaddrs: list = EMAIL_DEFAULT_LIST) -> int:
+               toaddrs: list = settings.EMAIL_DEFAULT_LIST) -> int:
     """
     :return: 
     :param name: required
@@ -51,7 +51,7 @@ def send_email(name: str, email_subject: str, email_msg: str, reply_email: str =
         fromaddr = "security portal"
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()
-        server.login(EMAIL_USER_NAME, EMAIL_PASSWORD)
+        server.login(settings.EMAIL_USER_NAME, settings.EMAIL_PASSWORD)
         msg = MIMEMultipart()
         msg['From'] = fromaddr
         msg['To'] = ", ".join(toaddrs)
