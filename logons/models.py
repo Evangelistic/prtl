@@ -4,10 +4,7 @@ import socket
 import os
 from smb.SMBConnection import SMBConnection
 import logging
-from portal.settings import AD_USER_LS, AD_PWD_LS, AD_SERVER_LS, AD_BASE_LS, AD_ATTR_LS, LOGONS_LOG_DIR, \
-    LOGONS_LOGON_SHARE, LOGONS_PASSWORD, LOGONS_SERVER, LOGONS_USERNAME, LOGONS_LOCAL_LOG_DIR
-
-
+from django.conf import settings
 # Create your models here.
 
 
@@ -23,16 +20,16 @@ def search_in_ad(type_object, type_search, who_is):
     :param who_is: value of type_search
     :return: dn value, this function return only one user data
     """
-    server = Server(AD_SERVER_LS, get_info=ALL)
-    user = AD_USER_LS
-    pwd = AD_PWD_LS
-    attr = AD_ATTR_LS
+    server = Server(settings.AD_SERVER_LS, get_info=ALL)
+    user = settings.AD_USER_LS
+    pwd = settings.AD_PWD_LS
+    attr = settings.AD_ATTR_LS
     c = Connection(server, user=user, password=pwd, authentication=NTLM, auto_bind=True)
     entry_list = c.extend.standard.paged_search(
-        search_base=AD_BASE_LS,
+        search_base=settings.AD_BASE_LS,
         search_filter='(&(objectCategory=CN=' +
                       type_object +
-                      ',CN=Schema,CN=Configuration,' + AD_BASE_LS + ')(' +
+                      ',CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')(' +
                       type_search + '=' + who_is + '))',
         search_scope=SUBTREE,
         attributes=attr[type_object],
@@ -138,5 +135,5 @@ class Smb(object):
 
 
 def sync_file_logs():
-    smb = Smb(LOGONS_USERNAME, LOGONS_PASSWORD, LOGONS_SERVER, LOGONS_LOGON_SHARE)
-    return smb.sync_dir_over_smb(smb_folder=LOGONS_LOG_DIR, local_folder=LOGONS_LOCAL_LOG_DIR)
+    smb = Smb(settings.LOGONS_USER, settings.AD_PWD_LS, settings.AD_SERVER_LS, settings.LOGONS_SHARE)
+    return smb.sync_dir_over_smb(smb_folder=settings.LOGONS_LOG_DIR, local_folder=settings.LOGONS_LOCAL_LOG_DIR)
