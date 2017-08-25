@@ -14,6 +14,8 @@ AD_ATTRIBUTE = {
     'group': 'cn',
 }
 
+temp = []
+
 
 def search_ad_data(input_search, type_search):
     """
@@ -37,7 +39,8 @@ def search_ad_data(input_search, type_search):
 
     entry_list = c.extend.standard.paged_search(
         search_base=settings.AD_BASE_LS,
-        search_filter='(&(objectCategory=CN=Person,CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')' + ad_filter + ')',
+        search_filter='(&(objectCategory=CN=Person,CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')' +
+                      ad_filter + ')',
         search_scope=SUBTREE,
         attributes=['cn', 'objectCategory', 'mail', 'sAMAccountName', 'lastLogon'],
         paged_size=5,
@@ -48,7 +51,7 @@ def search_ad_data(input_search, type_search):
 
     ad_data = []
     for entry in entry_list:
-        temp = []
+
         if not entry['attributes']['lastLogon']:
             entry['attributes']['lastLogon'] = datetime.datetime(1601, 1, 1, tzinfo=None)
         t = entry['attributes']['lastLogon']
@@ -89,7 +92,8 @@ def search_ad_data_group(input_search, type_search):
     c = Connection(server, user=user, password=pwd, authentication=NTLM, auto_bind=True)
     entry_list = c.extend.standard.paged_search(
         search_base=settings.AD_BASE_LS,
-        search_filter='(&(objectCategory=CN=Group,CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')' + ad_filter + ')',
+        search_filter='(&(objectCategory=CN=Group,CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')' +
+                      ad_filter + ')',
         search_scope=SUBTREE,
         attributes=['cn', 'description', 'member', 'whenChanged', 'whenCreated'],
         paged_size=5,
@@ -104,7 +108,7 @@ def search_ad_data_group(input_search, type_search):
     ad_data = []
 
     for entry in entry_list:
-        temp = []
+
         temp.append([entry['attributes']['cn']])
         temp.append(entry['attributes']['description'])
         """change member view"""
@@ -138,7 +142,8 @@ def compare_user_group(input_search):
 
         entry_list = c.extend.standard.paged_search(
             search_base=settings.AD_BASE_LS,
-            search_filter='(&(objectCategory=CN=Group,CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')' + ad_filter + ')',
+            search_filter='(&(objectCategory=CN=Group,CN=Schema,CN=Configuration,' + settings.AD_BASE_LS + ')' +
+                          ad_filter + ')',
             search_scope=SUBTREE,
             attributes=['cn', 'description', 'member', 'whenChanged', 'whenCreated'],
             paged_size=5,
@@ -149,7 +154,6 @@ def compare_user_group(input_search):
 
         for entry in entry_list:
             entry['dn'] = entry['dn'].split(',')[0][3:]
-        temp = []
         for entry in entry_list:
             temp.append(entry['attributes']['cn'])
         ad_data[ad_login] = temp

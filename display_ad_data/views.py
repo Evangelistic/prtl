@@ -9,12 +9,10 @@ from django.views.decorators.http import require_GET
 # @login_required
 @require_GET
 def ad_search(request):
-    try:
-        input_search = request.GET['input_search']
-        type_search = request.GET['type_search']
-    except:
-        input_search = ''
-        type_search = 'login'
+
+    input_search = request.GET.get('input_search', '')
+    type_search = request.GET.get('type_search', 'login')
+
     if input_search == '':
         return render(request, 'portal/ad-search.html', {
             'title': 'AD Search', })

@@ -5,4 +5,5 @@ from django.conf import settings
 
 def acs(request):
     content = {'url': settings.ACS_URL}
+    len(request)
     return render_to_response('portal/acs.html', content)
