@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from portal.settings import COMPANY_MAP,COMPANY_INFO
+from django.conf import settings
 
 
 # Create your views here.
@@ -35,8 +35,8 @@ def blog_item(request):
 def contact_us(request):
     return render(request, 'portal/contact-us.html', {
         'title': 'Security contacts',
-        'company_map': COMPANY_MAP,
-        'company_info': COMPANY_INFO
+        'company_map': settings.COMPANY_MAP,
+        'company_info': settings.COMPANY_INFO
     })
 
 
